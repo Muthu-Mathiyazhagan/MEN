@@ -1,0 +1,19 @@
+{
+  "name": "npm-demo",
+  "version": "1.0.0",
+  "description": "Here we are going to explore the Node package module. like create , load , publish and etc..",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm",
+    "demo"
+  ],
+  "author": "Muthu Mathiyazhagan",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^6.2.9",
+    "underscore": "^1.13.2"
+  }
+}
