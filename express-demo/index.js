@@ -22,7 +22,13 @@ app.get("/api/courses", (req, res) => {
 //Send only Particular course details
 app.get("/api/courses/:id", (req, res) => {
   // if (req.query) return res.send(JSON.stringify(req.query));
-  res.send(JSON.stringify(courses[req.params.id - 1]) + req.query);
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) {
+    res.status(404).send("The Course of Given ID was not found");
+  }
+  res.send(course);
+
+  // res.send(JSON.stringify(courses[req.params.id - 1]) + req.query); //Old Own Logic
 });
 
 const port = process.env.PORT || 3000;
