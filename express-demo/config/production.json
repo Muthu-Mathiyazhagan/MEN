@@ -1,0 +1,6 @@
+{
+  "name": "My Demo Express app : Prod Mode",
+  "mail": {
+    "server": "Prod-mail-server"
+  }
+}

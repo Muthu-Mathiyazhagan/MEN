@@ -1,0 +1,6 @@
+{
+  "name": "My Demo Express app : Dev Mode",
+  "mail": {
+    "server": "Dev-mail-server"
+  }
+}
