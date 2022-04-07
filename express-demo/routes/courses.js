@@ -37,6 +37,7 @@ router.post("/", (req, res) => {
 //Create course using GET method
 router.get("/create/:name", (req, res) => {
   let names = req.params.name;
+
   const course = {
     id: courses.length + 1,
     name: names,
