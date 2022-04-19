@@ -6,6 +6,7 @@ console.log("After");
 
 function displayUser(user) {
   console.log(user.gitHubName);
+
   getRepositories(user.gitHubName, getRespositories);
 }
 
