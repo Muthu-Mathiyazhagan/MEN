@@ -2,3 +2,6 @@ mongo-demo/node_modules
 express-demo/node_modules
 npm-demo/node_modules
 crud-mongoose/node_modules
+modeling-relationships/node_modules
+node_modules
+referencing-documents/node_modules
