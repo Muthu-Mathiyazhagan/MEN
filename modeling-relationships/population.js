@@ -4,7 +4,6 @@ mongoose
   .connect("mongodb://localhost/playground")
   .then(() => {
     console.log("Connected to MongoDB...");
-    console.log("test");
   })
   .catch((err) => console.error("Could not connect to MongoDB...", err));
 
@@ -36,7 +35,9 @@ async function createAuthor(name, bio, website) {
   });
 
   const result = await author.save();
-  console.log(result);
+  let id = result._id.toString();
+  let split = id.split('"')[0];
+  console.log(split);
 }
 
 async function createCourse(name, author) {
@@ -52,7 +53,7 @@ async function createCourse(name, author) {
 async function listCourses() {
   const courses = await Course.find()
     .select("name author -_id")
-    .populate("author", "name");
+    .populate("author", "-_id ");
   console.log(courses);
 }
 
@@ -60,13 +61,40 @@ async function removeLast() {
   // Remove last document from the database
   Course.findOneAndDelete().then((result) => {
     console.log("Removed from MongoDB...: ", result);
+    process.exit(0);
   });
+}
+
+async function updateAuthor(authorId, authorName) {
+  const author = await Author.findById(authorId);
+  author.name = authorName;
+  author.save();
+}
+
+async function updateCourse(courseId, courseName) {
+  const course = await Course.findByIdAndUpdate(
+    courseId,
+    {
+      $set: {
+        name: courseName,
+      },
+      $inc: { __v: 1 },
+    },
+    {
+      new: true,
+    }
+  );
+  console.log("Course updated." + course);
 }
 
 // createAuthor("Muthu", "My bio", "my website");
 
-// createCourse("4", "6266606c24a509336352ea9f");
+// createCourse("Node JS", "626675a60da9d505ab15d73b");
 
 // listCourses();
 
-removeLast();
+// removeLast();
+
+// updateAuthor("626675a60da9d505ab15d73b", "Mathiyazhagan");
+
+// updateCourse("626676197fba2367e9f8cd50", "Node JS");
