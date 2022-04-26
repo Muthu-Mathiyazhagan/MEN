@@ -17,14 +17,14 @@ const Course = mongoose.model(
   "Course",
   new mongoose.Schema({
     name: String,
-    author: [authorSchema],
+    authors: [authorSchema],
   })
 );
 
-async function createCourse(name, author) {
+async function createCourse(name, authors) {
   const course = new Course({
     name,
-    author: author,
+    authors: authors,
   });
 
   const result = await course.save();
@@ -33,7 +33,7 @@ async function createCourse(name, author) {
 
 async function listCourses() {
   const courses = await Course.find();
-  console.log(courses);
+  console.log("courses[0]: ", courses[0]);
 }
 
 async function createAuthor(name, bio, website) {
@@ -50,18 +50,46 @@ async function createAuthor(name, bio, website) {
   console.log(split);
 }
 
-createCourse("Node Course", [
-  new Author({ name: "Muthu", bio: "BioData", website: "www.muthu.com" }),
-  new Author({
-    name: "Mathiyazhagan",
-    bio: "626204",
-    website: "www.muthu.com",
-  }),
-  new Author({ name: "Vicky", bio: "BioData", website: "www.muthu.com" }),
-  new Author({
-    name: "ThekkuSeemai",
-    bio: "628002",
-    website: "www.muthunagar.com",
-  }),
-]);
+async function addAuthor(courseId, author) {
+  const course = await Course.findById(courseId);
+  course.authors.push(author);
+  course.__v++;
+  course.save();
+  console.log("course", course);
+}
+
+async function removeAuthor(courseId, authorId) {
+  const course = await Course.findById(courseId);
+  // course.__v++;
+  let author = course.authors.id(authorId);
+  author.remove();
+
+  course.save();
+  console.log("course removed: " + course);
+}
+
+// removeAuthor("62683651101bb1a258d48e73", "62683651101bb1a258d48e72");
+
+// addAuthor(
+//   "62683651101bb1a258d48e73",
+//   new Author({ name: "John Hennur", bio: "BioData", website: "www.muthu.com" })
+// );
+
+listCourses();
+
+// createCourse("Node Course", [
+//   new Author({ name: "Muthu", bio: "BioData", website: "www.muthu.com" }),
+//   new Author({
+//     name: "Mathiyazhagan",
+//     bio: "626204",
+//     website: "www.muthu.com",
+//   }),
+//   new Author({ name: "Vicky", bio: "BioData", website: "www.muthu.com" }),
+//   new Author({
+//     name: "ThekkuSeemai",
+//     bio: "628002",
+//     website: "www.muthunagar.com",
+//   }),
+// ]);
+
 // createAuthor("Mosh Hamedeni", "My bio", "My website");

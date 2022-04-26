@@ -52,8 +52,8 @@ async function createCourse(name, author) {
 
 async function listCourses() {
   const courses = await Course.find()
-    // .select("name author -_id")
-    .populate("author", "-_id ");
+    .select("name author _id")
+    .populate("author");
   console.log(courses);
 }
 
@@ -61,14 +61,15 @@ async function removeLast() {
   // Remove last document from the database
   Course.findOneAndDelete().then((result) => {
     console.log("Removed from MongoDB...: ", result);
-    process.exit(0);
   });
 }
 
 async function updateAuthor(authorId, authorName) {
   const author = await Author.findById(authorId);
   author.name = authorName;
+  author.__v++;
   author.save();
+  console.log("author updated : \n", author);
 }
 
 async function updateCourse(courseId, courseName) {
@@ -89,12 +90,12 @@ async function updateCourse(courseId, courseName) {
 
 // createAuthor("Muthu", "My bio", "my website");
 
-// createCourse("Node JS", "62679307f317359af5f6e4da");
+// createCourse("Digital Signal Processing", "6267c0fcdc9611a5f5742712");
 
-listCourses();
+// listCourses();
 
 // removeLast();
 
-// updateAuthor("626675a60da9d505ab15d73b", "Mathiyazhagan");
+updateAuthor("6267c0fcdc9611a5f5742712", "Muthu Mathiyazhagan");
 
 // updateCourse("626676197fba2367e9f8cd50", "Node JS");
