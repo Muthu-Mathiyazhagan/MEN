@@ -1,6 +1,1 @@
-const isCharging = require("is-charging");
-
-isCharging().then((result) => {
-  console.log(result);
-  //=> true
-});
+console.log("Am the best fullStack Developer Ever ");

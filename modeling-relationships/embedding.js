@@ -7,7 +7,7 @@ mongoose
 
 const authorSchema = new mongoose.Schema({
   name: String,
-  bio: String,
+  bio: { type: String, required: true },
   website: String,
 });
 
@@ -17,14 +17,14 @@ const Course = mongoose.model(
   "Course",
   new mongoose.Schema({
     name: String,
-    author: authorSchema,
+    author: [authorSchema],
   })
 );
 
 async function createCourse(name, author) {
   const course = new Course({
     name,
-    author,
+    author: author,
   });
 
   const result = await course.save();
@@ -50,5 +50,18 @@ async function createAuthor(name, bio, website) {
   console.log(split);
 }
 
-createCourse("Node Course", new Author({ name: "Mosh" }));
+createCourse("Node Course", [
+  new Author({ name: "Muthu", bio: "BioData", website: "www.muthu.com" }),
+  new Author({
+    name: "Mathiyazhagan",
+    bio: "626204",
+    website: "www.muthu.com",
+  }),
+  new Author({ name: "Vicky", bio: "BioData", website: "www.muthu.com" }),
+  new Author({
+    name: "ThekkuSeemai",
+    bio: "628002",
+    website: "www.muthunagar.com",
+  }),
+]);
 // createAuthor("Mosh Hamedeni", "My bio", "My website");
